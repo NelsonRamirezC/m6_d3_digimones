@@ -24,3 +24,22 @@ app.get("/api/digimones", (req, res) => {
     //res.sendFile(__dirname + "/digimones.json");
     res.send(digimones);
 });
+
+//RUTA FILTRO DIGIMONES POR NOMBRE
+app.get("/api/digimones/:nombre", (req, res) => {
+    let { nombre } = req.params;
+    let digimonesFiltrados = digimones.filter(
+        (digimon) => digimon.name.toLowerCase() == nombre.toLocaleLowerCase()
+    );
+
+    //SI EL NOMBRE PROPORCIONADO POR EL CLIENTE NO TIENE COINCIDENCIAS
+    //ENIAMOS UN MENSAJE DE DIGIMON NO ENCONTRADO POR CÓDIGO HTTP 404
+    if (digimonesFiltrados.length == 0) {
+        return res
+            .status(404)
+            .send({ message: `Digimon ${nombre} no encontrado` });
+    }
+
+    //SI ENCONTRAMOS AL DIGIMON ENVIAMOS LA RESPUESTA
+    res.send(digimonesFiltrados);
+});
