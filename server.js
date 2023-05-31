@@ -1,9 +1,13 @@
 const express = require("express");
+const cors = require("cors");
 const digimones = require("./digimones.json");
 
 //EJECUTAR EXPRESS PARA QUE NOS RETORNE A LA VARIABLE APP TODOS LOS MÉTODOS NECESARIOS
 //PARA LEVANTAR UN SERVIDOR
 const app = express();
+
+// Middlewares
+app.use(cors());
 
 const PORT = 3000;
 //MÉTODO QUE PERMITE ESCUCHAR PETICIONES A TRAVÉS DEL PUERTO 3000
@@ -28,7 +32,7 @@ app.get("/api/digimones", (req, res) => {
 //RUTA FILTRO DIGIMONES POR NOMBRE
 app.get("/api/digimones/nombre/:nombre", (req, res) => {
     let { nombre } = req.params;
-    let digimonesFiltrados = digimones.filter(
+    let digimonesFiltrados = digimones.find(
         (digimon) => digimon.name.toLowerCase() == nombre.toLocaleLowerCase()
     );
 
@@ -44,15 +48,17 @@ app.get("/api/digimones/nombre/:nombre", (req, res) => {
     res.send(digimonesFiltrados);
 });
 
-//AGREGAR ENPOINT GET FILTRO POR NIVEL
-
+//AGREGAR ENDPOINT GET FILTRO POR NIVEL
+app.get("/api/digimones/nivel/:nivel", (req, res) => {
+    let { nivel } = req.params;
+    let digimonesFiltrados = digimones.filter(
+        (digimon) => digimon.level.toLowerCase() == nivel.toLowerCase()
+    );
+    console.log(digimonesFiltrados);
+    res.send("Ruta nivel");
+});
 
 //AGREGAR ENDPOINT QUE PERMITA A LOS USUARIOS CREAR SU PROPIO DIGIMON
 
-
 //PERMITIR QUE LOS USUARIOS PUEDAN ELIMINAR DIGIMONES, PERO SÓLO LOS QUE FUERON AGREGADOS
 //ADICIONALMENTE
-
-
-
-
