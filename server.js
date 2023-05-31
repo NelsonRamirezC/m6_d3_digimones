@@ -26,7 +26,7 @@ app.get("/api/digimones", (req, res) => {
 });
 
 //RUTA FILTRO DIGIMONES POR NOMBRE
-app.get("/api/digimones/:nombre", (req, res) => {
+app.get("/api/digimones/nombre/:nombre", (req, res) => {
     let { nombre } = req.params;
     let digimonesFiltrados = digimones.filter(
         (digimon) => digimon.name.toLowerCase() == nombre.toLocaleLowerCase()
@@ -43,3 +43,16 @@ app.get("/api/digimones/:nombre", (req, res) => {
     //SI ENCONTRAMOS AL DIGIMON ENVIAMOS LA RESPUESTA
     res.send(digimonesFiltrados);
 });
+
+//AGREGAR ENPOINT GET FILTRO POR NIVEL
+
+
+//AGREGAR ENDPOINT QUE PERMITA A LOS USUARIOS CREAR SU PROPIO DIGIMON
+
+
+//PERMITIR QUE LOS USUARIOS PUEDAN ELIMINAR DIGIMONES, PERO SÓLO LOS QUE FUERON AGREGADOS
+//ADICIONALMENTE
+
+
+
+
