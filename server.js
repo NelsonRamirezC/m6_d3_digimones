@@ -8,6 +8,7 @@ const app = express();
 
 // Middlewares
 app.use(cors());
+app.use(express.json()); //permite que podamos procesar el payload json que manden los clientes
 
 const PORT = 3000;
 //MÉTODO QUE PERMITE ESCUCHAR PETICIONES A TRAVÉS DEL PUERTO 3000
@@ -54,11 +55,31 @@ app.get("/api/digimones/nivel/:nivel", (req, res) => {
     let digimonesFiltrados = digimones.filter(
         (digimon) => digimon.level.toLowerCase() == nivel.toLowerCase()
     );
-    console.log(digimonesFiltrados);
-    res.send("Ruta nivel");
+
+    if (digimonesFiltrados.length == 0) {
+        return res.status(404).send({
+            message: `No se han encontrado digimones con el nivel requerido.`,
+        });
+    }
+
+    res.send(digimonesFiltrados);
 });
 
 //AGREGAR ENDPOINT QUE PERMITA A LOS USUARIOS CREAR SU PROPIO DIGIMON
+
+app.post("/api/digimones", (req, res) => {
+    let { name, img, level } = req.body;
+    let nuevoDigimon = {
+        name,
+        img,
+        level,
+        ext: true,
+    };
+
+    digimones.push(nuevoDigimon);
+
+    res.status(201).send(nuevoDigimon);
+});
 
 //PERMITIR QUE LOS USUARIOS PUEDAN ELIMINAR DIGIMONES, PERO SÓLO LOS QUE FUERON AGREGADOS
 //ADICIONALMENTE
