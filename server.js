@@ -38,7 +38,7 @@ app.get("/api/digimones/nombre/:nombre", (req, res) => {
 
     //SI EL NOMBRE PROPORCIONADO POR EL CLIENTE NO TIENE COINCIDENCIAS
     //ENIAMOS UN MENSAJE DE DIGIMON NO ENCONTRADO POR CÓDIGO HTTP 404
-    if (digimonesFiltrados.length == 0) {
+    if (digimonesFiltrados) {
         return res
             .status(404)
             .send({ message: `Digimon ${nombre} no encontrado` });
